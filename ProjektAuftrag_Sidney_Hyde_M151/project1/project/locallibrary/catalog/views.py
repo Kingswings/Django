@@ -11,9 +11,14 @@ from catalog.forms import RenewBookForm
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .forms import RegistrationForm
+import logging
+
+logger = logging.getLogger(__name__)
 
 def index(request):
     """View function for home page of site."""
+    logger.info('This is an informational message.')
+    logger.error('An error occurred!')
 
     # Number of visits to this view, as counted in the session variable.
     num_visits = request.session.get('num_visits', 0)

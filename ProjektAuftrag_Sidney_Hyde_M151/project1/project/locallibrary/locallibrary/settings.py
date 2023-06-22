@@ -137,7 +137,19 @@ SESSION_IDLE_TIMEOUT = 1800  # 30 minutes
 # Set the session cookie age (in seconds)
 SESSION_COOKIE_AGE = SESSION_IDLE_TIMEOUT
 
-LOGGING_CONFIG = None
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+}
 
 
 
