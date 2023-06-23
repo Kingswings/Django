@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from catalog import views as catalog_views
 from django.urls import include
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,5 +31,5 @@ urlpatterns += [
 urlpatterns += [
     path('accounts/', include('django.contrib.auth.urls')),
     path('register/', catalog_views.register, name='register'),
-
+    path('', RedirectView.as_view(url='/catalog/', permanent=True)),
 ]

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    
     {% block title %}
       <title>Local Library</title>
     {% endblock %}
@@ -14,12 +15,53 @@
     <!-- Add additional CSS in static file -->
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <script>
+      // Timer variables
+      var timer;
+      var idleTimeout = 1800; // 30 minutes in seconds
+      var countdownElement;
+
+      // Function to start the timer
+      function startTimer() {
+        clearTimeout(timer);
+        timer = setTimeout(logout, idleTimeout * 1000);
+      }
+
+      // Function to logout the user
+      function logout() {
+        window.location.href = "{% url 'logout' %}"; // Replace with your logout URL
+      }
+
+      // Function to update the countdown element
+      function updateCountdown() {
+        var minutes = Math.floor(idleTimeout / 60);
+        var seconds = idleTimeout % 60;
+        countdownElement.textContent = minutes + "m " + seconds + "s";
+        idleTimeout--; // Decrement the timeout value
+      }
+
+      // Event listeners
+      document.addEventListener("mousemove", startTimer);
+      document.addEventListener("mousedown", startTimer);
+      document.addEventListener("keypress", startTimer);
+      document.addEventListener("touchmove", startTimer);
+
+      // Start the timer when the page loads
+      window.addEventListener("load", function () {
+        countdownElement = document.getElementById("countdown");
+        startTimer();
+        setInterval(updateCountdown, 1000);
+      });
+    </script>
   </head>
   <body>
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-2">
           {% block sidebar %}
+          <div>
+            Session Timeout in: <span id="countdown"></span>
+          </div>
             <ul class="sidebar-nav">
                 <li><a href="{% url 'index' %}">Home</a></li>
                 <li><a href="{% url 'books' %}">All books</a></li>
